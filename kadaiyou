@@ -1,0 +1,26 @@
+@echo off
+
+set /p choice=処理を選択してください（1: 有効化 / 2: 無効化）: 
+
+if "%choice%"=="1" (
+  echo ファイアーウォールを有効化します。
+  netsh advfirewall set allprofiles state on
+  echo プロキシを有効化します。
+  reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Internet Settings" /v ProxyEnable /t REG_DWORD /d 1 /f
+  echo Wi-Fiを有効化します。
+  netsh interface set interface "WI-FI" admin=enable
+  echo 処理が完了しました。
+  pause
+)
+
+if "%choice%"=="2" (
+  echo ファイアーウォールを無効化します。
+  netsh advfirewall set allprofiles state off
+  echo プロキシを無効化します。
+  reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Internet Settings" /v ProxyEnable /t REG_DWORD /d 0 /f
+  echo Wi-Fiを無効化します。
+  netsh interface set interface "WI-Fi" admin=disable
+  echo 処理が完了しました。
+  pause
+)
+
